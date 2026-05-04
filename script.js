@@ -3,8 +3,8 @@ const data = {
   "results": [
     {
       "title": "Faded",
-      "artist": "Alan Walker",
-      "thumbnail": "https://i.scdn.co/image/ab67616d0000b273a108e07c661f9fc54de9c43a"
+      "artist": "HINDIA",
+      "thumbnail": "https://open.spotify.com/playlist/37i9dQZF1E4tOS1lg4Kdgo?si=YVuQvKKSQfuLzhv9g5op4Q"
     },
     {
       "title": "Faded",
