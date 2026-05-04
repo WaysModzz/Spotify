@@ -2,40 +2,33 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Ways Music Ultra</title>
+<title>Spotify Player</title>
 
 <style>
-body {background:#121212;color:white;font-family:sans-serif;}
-.card {
-  background:#181818;
-  padding:10px;
-  margin:10px;
-  cursor:pointer;
-  border-radius:10px;
+body {
+  background:#121212;
+  color:white;
+  text-align:center;
+  font-family:sans-serif;
 }
-.card:hover {background:#282828;}
-
-.song {
-  padding:10px;
-  cursor:pointer;
+iframe {
+  margin-top:20px;
+  border-radius:12px;
 }
-.song:hover {background:#333;}
-img {width:100px;border-radius:10px;}
 </style>
 </head>
 
 <body>
 
-<h2>🎧 Playlist</h2>
-<div id="playlist"></div>
+<h2>🎧 Playlist Spotify</h2>
 
-<h2>🎵 Lagu</h2>
-<div id="songs"></div>
-
-<div id="player"></div>
-
-<script src="https://www.youtube.com/iframe_api"></script>
-<script src="script.js"></script>
+<iframe 
+  src="https://open.spotify.com/embed/playlist/37i9dQZF1E4tOS1lg4Kdgo"
+  width="100%" 
+  height="500" 
+  frameborder="0"
+  allow="autoplay; clipboard-write; encrypted-media; fullscreen">
+</iframe>
 
 </body>
 </html>
