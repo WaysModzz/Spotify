@@ -1,58 +1,99 @@
-// SIMULASI DATA DARI PLAYLIST SPOTIFY (contoh dari link kamu)
-const songs = [
-  { title: "kota ini tak sama tanpamu", artist: "Nadhif Basalamah" },
-  { title: "Ada titik-titik di ujung doa", artist: "Sal Priadi" },
-  { title: "SWIM", artist: "BTS" },
-  { title: "Risk It All", artist: "Bruno Mars" },
-  { title: "American Girls", artist: "Harry Styles" },
-  { title: "Lesung Pipi", artist: "Raim Laode" },
-  { title: "GO", artist: "BLACKPINK" },
-  { title: "WILDFLOWER", artist: "Billie Eilish" }
-];
+const TOKEN = "BQAMUMCXhfSjC1Pj9jqBrxB8kcb2T_wD3uavsMoBp913jYF48..."; // ganti kalau expired
 
-const container = document.getElementById("songs");
-
+let player;
+let songs = [];
 let currentIndex = 0;
 
-// render list
-songs.forEach((song, i) => {
-  const div = document.createElement("div");
-  div.className = "song";
+// DATA PLAYLIST DARI API KAMU
+const playlists = [
+  {
+    id: "3CdfoioAm3TCoieKyYPPys",
+    name: "2016 vibes🫧",
+    thumbnail: "https://image-cdn-ak.spotifycdn.com/image/ab67706c0000d72cfc1139d55164022b64c389aa"
+  },
+  {
+    id: "1nTJuzz0tilrwZx6ggQwA0",
+    name: "Alan Walker Hits",
+    thumbnail: "https://image-cdn-ak.spotifycdn.com/image/ab67706c0000da84c249b8e633b6264a54183644"
+  }
+];
 
-  div.innerHTML = `
-    <img src="https://i.scdn.co/image/ab67616d0000b273a108e07c661f9fc54de9c43a">
-    <div>
-      <b>${song.title}</b><br>
-      <small>${song.artist}</small>
-    </div>
-  `;
+// INIT YOUTUBE
+function onYouTubeIframeAPIReady() {
+  player = new YT.Player("player", {
+    height: "100",
+    width: "300"
+  });
+}
 
-  div.onclick = () => playSong(i);
+// LOAD PLAYLIST UI
+function loadPlaylists() {
+  const container = document.getElementById("playlist");
 
-  container.appendChild(div);
-});
+  playlists.forEach(p => {
+    const div = document.createElement("div");
+    div.className = "card";
 
-// play lagu
-function playSong(index) {
+    div.innerHTML = `
+      <img src="${p.thumbnail}">
+      <h4>${p.name}</h4>
+    `;
+
+    div.onclick = () => loadSongs(p.id);
+
+    container.appendChild(div);
+  });
+}
+
+// AMBIL LAGU DARI SPOTIFY
+async function loadSongs(playlistId) {
+  const res = await fetch(
+    `https://api.spotify.com/v1/playlists/${playlistId}/tracks`,
+    {
+      headers: {
+        Authorization: "Bearer " + TOKEN
+      }
+    }
+  );
+
+  const data = await res.json();
+
+  songs = data.items.map(item => ({
+    title: item.track.name,
+    artist: item.track.artists[0].name
+  }));
+
+  renderSongs();
+}
+
+// TAMPIL LAGU
+function renderSongs() {
+  const container = document.getElementById("songs");
+  container.innerHTML = "";
+
+  songs.forEach((song, i) => {
+    const div = document.createElement("div");
+    div.className = "song";
+    div.innerHTML = `${song.title} - ${song.artist}`;
+    div.onclick = () => playSong(i);
+    container.appendChild(div);
+  });
+}
+
+// PLAY
+async function playSong(index) {
   currentIndex = index;
 
   const song = songs[index];
-
-  document.getElementById("title").innerText = song.title;
-  document.getElementById("artist").innerText = song.artist;
-
   const query = encodeURIComponent(song.title + " " + song.artist);
 
-  document.getElementById("playerBox").innerHTML = `
-    <iframe 
-      src="https://www.youtube.com/embed?listType=search&list=${query}&autoplay=1">
-    </iframe>
-  `;
+  const res = await fetch(`https://ytsearch.automate.my.id/search?q=${query}`);
+  const data = await res.json();
+
+  const videoId = data.result[0].id;
+
+  player.loadVideoById(videoId);
 }
 
-// next otomatis
-function nextSong() {
-  currentIndex++;
-  if (currentIndex >= songs.length) currentIndex = 0;
-  playSong(currentIndex);
-}
+// START
+loadPlaylists();
