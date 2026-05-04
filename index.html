@@ -1,87 +1,41 @@
 <!DOCTYPE html>
-<html lang="id">
+<html>
 <head>
 <meta charset="UTF-8">
-<title>Ways Spotify Clone</title>
+<title>Ways Music Ultra</title>
 
 <style>
-body {
-  margin:0;
-  font-family:sans-serif;
-  background:#121212;
-  color:white;
-  display:flex;
-}
-
-.sidebar {
-  width:230px;
-  background:#000;
-  padding:20px;
-}
-
-.main {
-  flex:1;
-  padding:20px;
-}
-
-.song {
-  display:flex;
-  align-items:center;
-  gap:10px;
-  padding:10px;
-  cursor:pointer;
-  border-radius:5px;
-}
-
-.song:hover {
-  background:#282828;
-}
-
-.song img {
-  width:50px;
-}
-
-.player {
-  position:fixed;
-  bottom:0;
-  left:230px;
-  right:0;
+body {background:#121212;color:white;font-family:sans-serif;}
+.card {
   background:#181818;
   padding:10px;
-  display:flex;
-  align-items:center;
-  gap:10px;
+  margin:10px;
+  cursor:pointer;
+  border-radius:10px;
 }
+.card:hover {background:#282828;}
 
-iframe {
-  width:300px;
-  height:80px;
-  border:none;
+.song {
+  padding:10px;
+  cursor:pointer;
 }
+.song:hover {background:#333;}
+img {width:100px;border-radius:10px;}
 </style>
 </head>
 
 <body>
 
-<div class="sidebar">
-  <h2>🎵 Ways Music</h2>
-  <p>Playlist</p>
-</div>
+<h2>🎧 Playlist</h2>
+<div id="playlist"></div>
 
-<div class="main">
-  <h2>🔥 Playlist Spotify</h2>
-  <div id="songs"></div>
-</div>
+<h2>🎵 Lagu</h2>
+<div id="songs"></div>
 
-<div class="player">
-  <img id="cover">
-  <div>
-    <div id="title">Pilih lagu</div>
-    <div id="artist" style="color:#aaa;font-size:12px;"></div>
-  </div>
-  <div id="playerBox"></div>
-</div>
+<div id="player"></div>
 
+<script src="https://www.youtube.com/iframe_api"></script>
 <script src="script.js"></script>
+
 </body>
 </html>
